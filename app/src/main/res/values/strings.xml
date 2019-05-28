@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Carrotquest Example</string>
+
+    <string name="all_hint_user_id">User Id</string>
+    <string name="all_hint_user_name">User Name</string>
+
+    <string name="all_button_log_in">Log in</string>
+    <string name="all_button_log_out">Log out</string>
+
+    <string name="all_error_required_field">Required field</string>
+</resources>
