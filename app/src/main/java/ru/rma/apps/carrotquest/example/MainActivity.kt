@@ -1,17 +1,20 @@
 package ru.rma.apps.carrotquest.example
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import io.carrotquest_sdk.android.Carrot
+import io.carrotquest_sdk.android.constants.SharedPreferenceKeys
 import io.carrotquest_sdk.android.util.UserProperty
 import kotlinx.android.synthetic.main.activity_main.*
 
-private const val APP_ID = "Enter your APP_ID"
-private const val API_KEY = "Enter your API_KEY"
-private const val USER_AUTH_KEY = "Enter your USER_AUTH_KEY"
-
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,22 +37,40 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         if (userId.isEmpty()) {
             layoutUserId.error = getString(R.string.all_error_required_field)
+            inputUserId.requestFocus()
             return
         }
         if (userName.isEmpty()) {
             layoutUserName.error = getString(R.string.all_error_required_field)
+            inputUserName.requestFocus()
             return
         }
 
+        Log.v(TAG, "logIn: $userId $userName")
+        printUserFromPreferences()
+        Log.v(TAG, "setup")
         Carrot.setup(applicationContext, API_KEY, APP_ID)
+        printUserFromPreferences()
+        Log.v(TAG, "auth")
         Carrot.auth(userId, USER_AUTH_KEY)
+        printUserFromPreferences()
         Carrot.setUserProperty(UserProperty("\$name", userName))
     }
 
     private fun logOut() {
+        Log.v(TAG, "logOut")
         Carrot.deInit()
 
         inputUserId.setText("")
         inputUserName.setText("")
+    }
+
+    private fun carrotPreferences() = applicationContext.getSharedPreferences(SharedPreferenceKeys.CARROT_PREF_NAME, Context.MODE_PRIVATE)
+
+    private fun printUserFromPreferences() {
+        carrotPreferences().let { pref ->
+            Log.v(TAG, "CARROT_TOKEN: " + pref.getString(SharedPreferenceKeys.CARROT_TOKEN, ""))
+            Log.v(TAG, "CARROT_USER_ID: " + pref.getString(SharedPreferenceKeys.CARROT_USER_ID, ""))
+        }
     }
 }
