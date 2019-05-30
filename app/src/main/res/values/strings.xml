@@ -6,6 +6,7 @@
 
     <string name="all_button_log_in">Log in</string>
     <string name="all_button_log_out">Log out</string>
+    <string name="all_button_log">Log</string>
 
     <string name="all_error_required_field">Required field</string>
 </resources>

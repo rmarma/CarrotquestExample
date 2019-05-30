@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (v?.id ?: 0) {
             R.id.buttonLogIn -> logIn()
             R.id.buttonLogOut -> logOut()
+            R.id.buttonLog -> printUserFromPreferences()
         }
     }
 
