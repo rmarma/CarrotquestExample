@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         Carrot.setup(applicationContext, API_KEY, APP_ID)
         printUserFromPreferences()
         Log.v(TAG, "auth")
-        Carrot.auth(userId, USER_AUTH_KEY, object: Carrot.Callback<Boolean>{
+        Carrot.auth(userId, USER_AUTH_KEY, object : Carrot.Callback<Boolean> {
             override fun onResponse(result: Boolean?) {
                 Log.v(TAG, "auth: onResponse: $result")
                 if (result == true) {
@@ -76,12 +76,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         inputUserName.setText("")
     }
 
-    private fun carrotPreferences() = applicationContext.getSharedPreferences(SharedPreferenceKeys.CARROT_PREF_NAME, Context.MODE_PRIVATE)
+    private fun carrotPreferences() =
+        applicationContext.getSharedPreferences(SharedPreferenceKeys.CARROT_PREF_NAME, Context.MODE_PRIVATE)
 
     private fun printUserFromPreferences() {
-        carrotPreferences().let { pref ->
-            Log.v(TAG, "CARROT_TOKEN: " + pref.getString(SharedPreferenceKeys.CARROT_TOKEN, ""))
-            Log.v(TAG, "CARROT_USER_ID: " + pref.getString(SharedPreferenceKeys.CARROT_USER_ID, ""))
+        with(carrotPreferences()) {
+            Log.v(TAG, "CARROT_TOKEN: " + getString(SharedPreferenceKeys.CARROT_TOKEN, ""))
+            Log.v(TAG, "CARROT_USER_ID: " + getString(SharedPreferenceKeys.CARROT_USER_ID, ""))
         }
     }
 }
