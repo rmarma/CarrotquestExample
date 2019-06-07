@@ -48,17 +48,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         Log.v(TAG, "logIn: $userId $userName")
-        printUserFromPreferences()
         Log.v(TAG, "setup")
-        Carrot.setup(applicationContext, API_KEY, APP_ID)
-        printUserFromPreferences()
-        Log.v(TAG, "auth")
-        Carrot.auth(userId, USER_AUTH_KEY, object : Carrot.Callback<Boolean> {
+        Carrot.setup(applicationContext, API_KEY, APP_ID, object : Carrot.Callback<Boolean> {
+
             override fun onResponse(result: Boolean?) {
-                Log.v(TAG, "auth: onResponse: $result")
+                Log.v(TAG, "setup: onResponse: $result")
                 if (result == true) {
-                    printUserFromPreferences()
-                    Carrot.setUserProperty(UserProperty("\$name", userName))
+                    Log.v(TAG, "auth")
+                    Carrot.auth(userId, USER_AUTH_KEY, object : Carrot.Callback<Boolean> {
+                        override fun onResponse(result: Boolean?) {
+                            Log.v(TAG, "auth: onResponse: $result")
+                            if (result == true) {
+                                Carrot.setUserProperty(UserProperty("\$name", userName))
+                            }
+                        }
+
+                        override fun onFailure(t: Throwable?) {
+                            t?.printStackTrace()
+                        }
+                    })
                 }
             }
 
