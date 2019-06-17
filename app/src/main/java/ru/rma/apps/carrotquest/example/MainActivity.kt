@@ -7,7 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import io.carrotquest_sdk.android.Carrot
 import io.carrotquest_sdk.android.constants.SharedPreferenceKeys
-import io.carrotquest_sdk.android.util.UserProperty
+import io.carrotquest_sdk.android.models.UserProperty
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
